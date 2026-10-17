@@ -1,0 +1,13 @@
+const $ = id => document.getElementById(id);
+const defaults = {activity:"Playing San Andreas Multiplayer",server:"Indonesia Roleplay",details:"Sedang bermain SA:MP",address:"",players:128};
+const fields = ["activity","server","details","address","players"];
+function readConfig(){return {activity:$("activity").value.trim(),server:$("server").value.trim(),details:$("details").value.trim(),address:$("address").value.trim(),players:Number($("players").value)||0};}
+function render(){const c=readConfig();$("prevActivity").textContent=c.activity||"SA:MP";$("prevDetails").textContent=c.details||" ";$("prevServer").textContent=c.server||"Server belum diatur";$("prevPlayers").textContent=`${c.players} players online${c.address?" · "+c.address:""}`;const out={schemaVersion:1,application:"samp-discord-presence-panel",presence:c,note:"This is configuration only. A local Windows companion/plugin is required to publish Discord Rich Presence."};$("jsonPreview").textContent=JSON.stringify(out,null,2);}
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2300);}
+$("settingsForm").addEventListener("submit",e=>{e.preventDefault();localStorage.setItem("sampPresenceConfig",JSON.stringify(readConfig()));$("configStatus").textContent="Saved config";render();toast("Pengaturan disimpan di browser ini.");});
+$("reset").addEventListener("click",()=>{fields.forEach(k=>$(k).value=defaults[k]);localStorage.removeItem("sampPresenceConfig");$("configStatus").textContent="Default config";render();toast("Pengaturan direset.");});
+$("download").addEventListener("click",()=>{const blob=new Blob([JSON.stringify({schemaVersion:1,application:"samp-discord-presence-panel",presence:readConfig(),note:"Configuration only; local companion required."},null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="presence-config.json";a.click();URL.revokeObjectURL(url);toast("File JSON diunduh.");});
+$("copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("jsonPreview").textContent);toast("JSON disalin.");}catch(e){toast("Clipboard tidak tersedia; salin dari kotak JSON.");}});
+fields.forEach(k=>$(k).addEventListener("input",render));
+try{const saved=JSON.parse(localStorage.getItem("sampPresenceConfig")||"null");if(saved){fields.forEach(k=>{if(saved[k]!==undefined)$(k).value=saved[k];});$("configStatus").textContent="Saved config";}}catch(e){}
+render();

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#5865f2">
+  <title>SA:MP Presence — Control Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">S</div><div><strong>SA:MP <span>Presence</span></strong><small>CONTROL PANEL</small></div></div>
+      <div class="nav-label">WORKSPACE</div>
+      <a class="nav active" href="#dashboard"><span>◫</span> Dashboard</a>
+      <a class="nav" href="#settings"><span>⚙</span> Rich Presence</a>
+      <a class="nav" href="#setup"><span>⇧</span> Setup guide</a>
+      <div class="side-note"><div class="pulse"></div><div><b>Web interface</b><small>Preview mode aktif</small></div></div>
+      <div class="sidebar-bottom">Community project<br><span>SA:MP • Discord</span></div>
+    </aside>
+    <main id="dashboard">
+      <header><div><div class="eyebrow">WORKSPACE / DASHBOARD</div><h1>Rich Presence Panel</h1><p>Atur tampilan aktivitas SA:MP kamu.</p></div><div class="top-pill"><span class="dot"></span> WEB PREVIEW</div></header>
+      <section class="stats">
+        <article class="stat"><div class="stat-icon purple">◉</div><div><small>INTEGRATION</small><strong>Belum terhubung</strong><span>Butuh aplikasi lokal</span></div></article>
+        <article class="stat"><div class="stat-icon green">✦</div><div><small>CONFIGURATION</small><strong id="configStatus">Default config</strong><span>Disimpan di browser ini</span></div></article>
+        <article class="stat"><div class="stat-icon blue">⌘</div><div><small>PLATFORM</small><strong>SA:MP + Discord</strong><span>Windows PC</span></div></article>
+      </section>
+      <div class="content-grid">
+        <section class="panel" id="settings">
+          <div class="panel-heading"><div><h2>Presence settings</h2><p>Ubah teks preview dan ekspor konfigurasi.</p></div><span class="tag">SETTINGS</span></div>
+          <form id="settingsForm">
+            <label>Nama aktivitas <input id="activity" maxlength="80" value="Playing San Andreas Multiplayer" required></label>
+            <label>Nama server <input id="server" maxlength="80" value="Indonesia Roleplay" required></label>
+            <label>Detail status <input id="details" maxlength="100" value="Sedang bermain SA:MP"></label>
+            <label>Alamat server (opsional) <input id="address" maxlength="100" placeholder="contoh: samp.example.net:7777"></label>
+            <label>Player count (preview saja) <input id="players" type="number" min="0" max="1000" value="128"></label>
+            <div class="form-actions"><button class="primary" type="submit">Simpan pengaturan</button><button class="secondary" id="reset" type="button">Reset</button></div>
+            <p class="helper">Data ini hanya mengubah preview dan file konfigurasi. Belum mengubah status Discord yang sebenarnya.</p>
+          </form>
+        </section>
+        <section class="panel preview-panel">
+          <div class="panel-heading"><div><h2>Live preview</h2><p>Contoh kartu aktivitas Discord.</p></div><span class="tag online">PREVIEW</span></div>
+          <div class="discord-card">
+            <div class="discord-title"><div class="discord-logo">◉</div><div><strong>DISCORD</strong><small>Playing a game</small></div><span class="ellipsis">•••</span></div>
+            <div class="game-row"><div class="game-art">SA<span>MP</span></div><div class="game-copy"><strong id="prevActivity">Playing San Andreas Multiplayer</strong><span id="prevDetails">Sedang bermain SA:MP</span><span id="prevServer">Indonesia Roleplay</span><span id="prevPlayers">128 players online</span></div></div>
+            <div class="preview-footer"><span class="green-dot"></span> Preview lokal · bukan status live</div>
+          </div>
+          <div class="notice"><strong>ⓘ Kenapa belum live?</strong><p>Browser tidak bisa menjalankan plugin SA:MP atau mengubah Rich Presence Discord secara langsung. Dibutuhkan program pendamping Windows yang membaca game dan berkomunikasi dengan Discord.</p></div>
+        </section>
+      </div>
+      <section class="panel export-panel">
+        <div class="panel-heading"><div><h2>Export configuration</h2><p>Unduh pengaturan untuk dipakai oleh aplikasi pendamping yang dibuat nanti.</p></div></div>
+        <div class="export-row"><div><strong>presence-config.json</strong><small>JSON · konfigurasi dasar</small></div><button class="primary" id="download">Download JSON</button><button class="secondary" id="copy">Copy JSON</button></div>
+        <pre id="jsonPreview"></pre>
+      </section>
+      <section class="panel setup-panel" id="setup">
+        <div class="panel-heading"><div><h2>How to go live</h2><p>Langkah untuk mengaktifkan integrasi sungguhan.</p></div></div>
+        <div class="steps">
+          <div class="step"><b>01</b><div><strong>Host website</strong><p>Upload file ini ke GitHub Pages atau layanan static hosting.</p></div></div>
+          <div class="step"><b>02</b><div><strong>Buat aplikasi Windows</strong><p>Aplikasi lokal harus membaca data SA:MP dengan cara yang aman dan mengelola koneksi Discord Rich Presence.</p></div></div>
+          <div class="step"><b>03</b><div><strong>Hubungkan konfigurasi</strong><p>Aplikasi lokal membaca file JSON hasil ekspor. Website ini belum mengirim data langsung ke game.</p></div></div>
+        </div>
+      </section>
+      <footer>SA:MP Presence Panel <span>Demo UI • Tidak berafiliasi dengan Discord atau SA:MP</span></footer>
+    </main>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "application": "samp-discord-presence-panel",
+  "presence": {
+    "activity": "mastoosj",
+    "server": "",
+    "details": "",
+    "address": "",
+    "players": 0
+  },
+  "note": "Configuration only; local companion required."
+}
